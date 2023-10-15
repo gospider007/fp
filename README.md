@@ -32,7 +32,7 @@ If you have questions, feel free to reach out to us in the following ways:
 * WeChat (Chinese): gospider007
 
 ## Sponsors
-If you like req and it really helps you, feel free to reward me with a cup of coffee, and don't forget to mention your github id.
+If you like and it really helps you, feel free to reward me with a cup of coffee, and don't forget to mention your github id.
 <table>
     <tr>
         <td align="center">
