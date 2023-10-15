@@ -36,12 +36,12 @@ If you like and it really helps you, feel free to reward me with a cup of coffee
 <table>
     <tr>
         <td align="center">
-            <img src="./play/wx.jpg" height="200px" width="200px"   alt=""/>
+            <img src="https://github.com/gospider007/tools/blob/master/play/wx.jpg?raw=true" height="200px" width="200px"   alt=""/>
             <br />
             <sub><b>Wechat</b></sub>
         </td>
         <td align="center">
-            <img src="./play/qq.jpg" height="200px" width="200px"   alt=""/>
+            <img src="https://github.com/gospider007/tools/blob/master/play/qq.jpg?raw=true" height="200px" width="200px"   alt=""/>
             <br />
             <sub><b>Alipay</b></sub>
         </td>
