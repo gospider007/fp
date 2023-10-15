@@ -28,7 +28,7 @@ type Option struct {
 	Handler     http.Handler
 }
 
-// https://tools.scrapfly.io/api/fp/anything?extended=1
+// example:  https://tools.scrapfly.io/api/fp/anything?extended=1
 func GinHandlerFunc(ctx *gin.Context) {
 	fpData, ok := ja3.GetFpContextData(ctx.Request.Context())
 	result := make(map[string]any)
@@ -83,7 +83,7 @@ func GinHandlerFunc(ctx *gin.Context) {
 		ctx.JSON(200, result)
 	} else {
 		ctx.JSON(200, map[string]any{
-			"error": "指纹加载失败",
+			"error": "fp load error",
 		})
 	}
 }
