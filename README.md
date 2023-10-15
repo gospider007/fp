@@ -25,7 +25,7 @@ func main() {
 }
 ```
 # Contributing
-If you have a bug report or feature request, you can [open an issue](./issues/new)
+If you have a bug report or feature request, you can [open an issue](../../issues/new)
 # Contact
 If you have questions, feel free to reach out to us in the following ways:
 * QQ Group (Chinese): 939111384 - <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=yI72QqgPExDqX6u_uEbzAE_XfMW6h_d3&jump_from=webapi"><img src="https://pub.idqqimg.com/wpa/images/group.png"></a>
