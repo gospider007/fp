@@ -211,7 +211,9 @@ func (obj *Conn) Read(b []byte) (n int, err error) {
 		if obj.raw[0] != 22 {
 			obj.fin = true
 		} else if rawTotal := len(obj.raw); rawTotal >= 5 {
-			if total := int(binary.BigEndian.Uint16(obj.raw[3:5])) + 5; total <= rawTotal {
+			if total := int(binary.BigEndian.Uint16(obj.raw[3:5])) + 5; total > 16384 {
+				obj.fin = true
+			} else if total <= rawTotal {
 				obj.raw = obj.raw[:total]
 				obj.fin = true
 			}
