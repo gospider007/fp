@@ -4,7 +4,9 @@ import (
 	"context"
 	"crypto/sha256"
 	"crypto/tls"
+	"encoding/binary"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -36,6 +38,7 @@ func GinHandlerFunc(ctx *gin.Context) {
 	result["tlsVersion"] = ctx.Request.TLS.Version
 	result["userAgent"] = ctx.Request.UserAgent()
 	rawClientHelloInfo, err := fpData.RawClientHelloInfo()
+	log.Print(err)
 	if err == nil {
 		clientHelloParseData := rawClientHelloInfo.Parse()
 		result["tls"] = clientHelloParseData
@@ -195,6 +198,7 @@ type Listener struct{ listen net.Listener }
 type Conn struct {
 	conn net.Conn
 	raw  []byte
+	fin  bool
 }
 
 func (obj *Conn) ClientHelloData() []byte {
@@ -202,9 +206,16 @@ func (obj *Conn) ClientHelloData() []byte {
 }
 func (obj *Conn) Read(b []byte) (n int, err error) {
 	i, err := obj.conn.Read(b)
-	if err == nil && obj.raw == nil {
-		obj.raw = make([]byte, i)
-		copy(obj.raw, b)
+	if !obj.fin && err == nil && i > 0 {
+		obj.raw = append(obj.raw, b...)
+		if obj.raw[0] != 22 {
+			obj.fin = true
+		} else if rawTotal := len(obj.raw); rawTotal >= 5 {
+			if total := int(binary.BigEndian.Uint16(obj.raw[3:5])) + 5; total <= rawTotal {
+				obj.raw = obj.raw[:total]
+				obj.fin = true
+			}
+		}
 	}
 	return i, err
 }
@@ -218,7 +229,7 @@ func (obj *Conn) SetWriteDeadline(t time.Time) error { return obj.conn.SetWriteD
 
 func (obj *Listener) Accept() (net.Conn, error) {
 	conn, err := obj.listen.Accept()
-	return &Conn{conn: conn}, err
+	return &Conn{conn: conn, raw: []byte{}}, err
 }
 func (obj *Listener) Close() error   { return obj.listen.Close() }
 func (obj *Listener) Addr() net.Addr { return obj.listen.Addr() }
