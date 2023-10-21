@@ -17,6 +17,7 @@ import (
 	"github.com/gospider007/gtls"
 	"github.com/gospider007/ja3"
 	"github.com/gospider007/net/http2"
+
 	"github.com/gospider007/tools"
 )
 
@@ -32,13 +33,15 @@ type Option struct {
 
 // example:  https://tools.scrapfly.io/api/fp/anything?extended=1
 func GinHandlerFunc(ctx *gin.Context) {
+	log.Print(ctx.Writer.Header())
+	// http.ResponseWriter
+
 	fpData, ok := ja3.GetFpContextData(ctx.Request.Context())
 	result := make(map[string]any)
 	result["negotiatedProtocol"] = ctx.Request.TLS.NegotiatedProtocol
 	result["tlsVersion"] = ctx.Request.TLS.Version
 	result["userAgent"] = ctx.Request.UserAgent()
 	rawClientHelloInfo, err := fpData.RawClientHelloInfo()
-	log.Print(err)
 	if err == nil {
 		clientHelloParseData := rawClientHelloInfo.Parse()
 		result["tls"] = clientHelloParseData
@@ -74,8 +77,8 @@ func GinHandlerFunc(ctx *gin.Context) {
 		}
 		sort.Slice(ciphers, func(i, j int) bool { return ciphers[i] < ciphers[j] })
 		sort.Slice(exts, func(i, j int) bool { return exts[i] < exts[j] })
-		ja4bStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(ciphers, ""))))
-		ja4cStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(exts, "") + tools.AnyJoin(clientHelloParseData.Algorithms, ""))))
+		ja4bStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(ciphers, ""))))[:12]
+		ja4cStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(exts, "") + tools.AnyJoin(clientHelloParseData.Algorithms, ""))))[:12]
 		ja4 := tools.AnyJoin([]string{ja4aStr, ja4bStr, ja4cStr}, "_")
 		result["ja4"] = ja4
 	}
@@ -121,18 +124,20 @@ func Serve(handler http.Handler, options ...Option) (err error) {
 	} else if certificate, err = gtls.CreateProxyCertWithName("test"); err != nil {
 		return err
 	}
-	var tLSConfig *tls.Config
+	var tlSConfig *tls.Config
 	if option.TLSConfig == nil {
-		tLSConfig = new(tls.Config)
+		tlSConfig = new(tls.Config)
+	} else {
+		tlSConfig = option.TLSConfig
 	}
-	if tLSConfig.Certificates == nil {
-		tLSConfig.Certificates = []tls.Certificate{certificate}
+	if tlSConfig.Certificates == nil {
+		tlSConfig.Certificates = []tls.Certificate{certificate}
 	}
-	if tLSConfig.GetConfigForClient == nil {
-		tLSConfig.GetConfigForClient = GetConfigForClient
+	if tlSConfig.GetConfigForClient == nil {
+		tlSConfig.GetConfigForClient = GetConfigForClient
 	}
-	if tLSConfig.NextProtos == nil {
-		tLSConfig.NextProtos = []string{"h2", "http/1.1"}
+	if tlSConfig.NextProtos == nil {
+		tlSConfig.NextProtos = []string{"h2", "http/1.1"}
 	}
 	var server *http.Server
 	if option.Server != nil {
@@ -155,7 +160,7 @@ func Serve(handler http.Handler, options ...Option) (err error) {
 		server.Handler = handler
 	}
 	if server.TLSConfig == nil {
-		server.TLSConfig = tLSConfig
+		server.TLSConfig = tlSConfig
 	}
 	ln, err := Listen("tcp", option.Addr)
 	if err != nil {
@@ -164,11 +169,10 @@ func Serve(handler http.Handler, options ...Option) (err error) {
 	defer ln.Close()
 	return server.ServeTLS(ln, "", "")
 }
-
 func TlsH2tProto(s *http.Server, c *tls.Conn, h http.Handler) {
 	ctx, fpContextData := ja3.CreateContext(context.TODO())
-	if f, ok := c.NetConn().(interface{ ClientHelloData() []byte }); ok {
-		fpContextData.SetClientHelloData(f.ClientHelloData())
+	if conn, ok := c.NetConn().(*Conn); ok {
+		fpContextData.SetClientHelloData(conn.clientHelloData())
 	}
 	(&http2.Server{}).ServeConn(c, &http2.ServeConnOpts{
 		Context:    ctx,
@@ -183,7 +187,7 @@ func GetConfigForClient(chi *tls.ClientHelloInfo) (*tls.Config, error) {
 	if fpContextData, ok := ja3.GetFpContextData(chi.Context()); ok {
 		fpContextData.SetClientHelloInfo(*chi)
 		if conn, ok := chi.Conn.(*Conn); ok {
-			fpContextData.SetClientHelloData(conn.ClientHelloData())
+			fpContextData.SetClientHelloData(conn.clientHelloData())
 		}
 	}
 	return nil, nil
@@ -196,25 +200,25 @@ func Listen(network string, address string) (*Listener, error) {
 
 type Listener struct{ listen net.Listener }
 type Conn struct {
-	conn net.Conn
-	raw  []byte
-	fin  bool
+	conn           net.Conn
+	rawClientHello []byte
+	fin            bool
 }
 
-func (obj *Conn) ClientHelloData() []byte {
-	return obj.raw
+func (obj *Conn) clientHelloData() []byte {
+	return obj.rawClientHello
 }
 func (obj *Conn) Read(b []byte) (n int, err error) {
 	i, err := obj.conn.Read(b)
 	if !obj.fin && err == nil && i > 0 {
-		obj.raw = append(obj.raw, b...)
-		if obj.raw[0] != 22 {
+		obj.rawClientHello = append(obj.rawClientHello, b[:i]...)
+		if obj.rawClientHello[0] != 22 {
 			obj.fin = true
-		} else if rawTotal := len(obj.raw); rawTotal >= 5 {
-			if total := int(binary.BigEndian.Uint16(obj.raw[3:5])) + 5; total > 16384 {
+		} else if rawTotal := len(obj.rawClientHello); rawTotal >= 5 {
+			if total := int(binary.BigEndian.Uint16(obj.rawClientHello[3:5])) + 5; total > 16384 {
 				obj.fin = true
 			} else if total <= rawTotal {
-				obj.raw = obj.raw[:total]
+				obj.rawClientHello = obj.rawClientHello[:total]
 				obj.fin = true
 			}
 		}
@@ -231,7 +235,7 @@ func (obj *Conn) SetWriteDeadline(t time.Time) error { return obj.conn.SetWriteD
 
 func (obj *Listener) Accept() (net.Conn, error) {
 	conn, err := obj.listen.Accept()
-	return &Conn{conn: conn, raw: []byte{}}, err
+	return &Conn{conn: conn, rawClientHello: []byte{}}, err
 }
 func (obj *Listener) Close() error   { return obj.listen.Close() }
 func (obj *Listener) Addr() net.Addr { return obj.listen.Addr() }
