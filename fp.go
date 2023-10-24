@@ -1,241 +1,183 @@
 package fp
 
 import (
+	"bufio"
 	"context"
-	"crypto/sha256"
 	"crypto/tls"
 	"encoding/binary"
-	"fmt"
-	"log"
+	"errors"
 	"net"
 	"net/http"
 	"os"
-	"sort"
-	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gospider007/gtls"
 	"github.com/gospider007/ja3"
 	"github.com/gospider007/net/http2"
-
-	"github.com/gospider007/tools"
 )
 
 type Option struct {
 	Addr        string
-	Server      *http.Server
 	CertFile    string
 	KeyFile     string
 	Certificate tls.Certificate
-	TLSConfig   *tls.Config
+	NextProtos  []string
 	Handler     http.Handler
+	AcmeDomain  string
+	AcmeEmail   string
 }
 
-// example:  https://tools.scrapfly.io/api/fp/anything?extended=1
-func GinHandlerFunc(ctx *gin.Context) {
-	log.Print(ctx.Writer.Header())
-	// http.ResponseWriter
-
-	fpData, ok := ja3.GetFpContextData(ctx.Request.Context())
-	result := make(map[string]any)
-	result["negotiatedProtocol"] = ctx.Request.TLS.NegotiatedProtocol
-	result["tlsVersion"] = ctx.Request.TLS.Version
-	result["userAgent"] = ctx.Request.UserAgent()
-	rawClientHelloInfo, err := fpData.RawClientHelloInfo()
-	if err == nil {
-		clientHelloParseData := rawClientHelloInfo.Parse()
-		result["tls"] = clientHelloParseData
-		result["ja3"], result["ja3n"] = clientHelloParseData.Fp()
-		ja4aStr := "t"
-		switch ctx.Request.TLS.Version {
-		case tls.VersionTLS10:
-			ja4aStr += "10"
-		case tls.VersionTLS11:
-			ja4aStr += "11"
-		case tls.VersionTLS12:
-			ja4aStr += "12"
-		case tls.VersionTLS13:
-			ja4aStr += "13"
-		default:
-			ja4aStr += "00"
-		}
-		if ctx.Request.TLS.ServerName == "" {
-			ja4aStr += "i"
-		} else if _, addTyp := gtls.ParseHost(ctx.Request.TLS.ServerName); addTyp != 0 {
-			ja4aStr += "i"
+func newTlsConfig(option Option) (*tls.Config, error) {
+	var tlsConfig *tls.Config
+	if option.Certificate.Certificate != nil {
+		tlsConfig = &tls.Config{Certificates: []tls.Certificate{option.Certificate}}
+	} else if option.CertFile != "" && option.KeyFile != "" {
+		if certData, err := os.ReadFile(option.CertFile); err != nil {
+			return tlsConfig, err
+		} else if cert, err := gtls.LoadCert(certData); err != nil {
+			return tlsConfig, err
+		} else if keyData, err := os.ReadFile(option.KeyFile); err != nil {
+			return tlsConfig, err
+		} else if key, err := gtls.LoadCertKey(keyData); err != nil {
+			return tlsConfig, err
+		} else if certificate, err := gtls.CreateTlsCert(cert, key); err != nil {
+			return tlsConfig, err
 		} else {
-			ja4aStr += "d"
+			tlsConfig = &tls.Config{Certificates: []tls.Certificate{certificate}}
 		}
-		ciphers := ja3.ClearGreas(clientHelloParseData.Ciphers)
-		ja4aStr += fmt.Sprint(len(ciphers))
-		exts := ja3.ClearGreas(clientHelloParseData.Extensions)
-		ja4aStr += fmt.Sprint(len(exts))
-		if ctx.Request.TLS.NegotiatedProtocol == "" {
-			ja4aStr += "00"
+	} else if option.AcmeDomain != "" && option.AcmeEmail != "" {
+		if acme, err := gtls.CreateAcme(option.AcmeDomain, option.AcmeEmail); err != nil {
+			return tlsConfig, err
 		} else {
-			ja4aStr += ctx.Request.TLS.NegotiatedProtocol
+			tlsConfig = acme.TLSConfig(option.NextProtos)
 		}
-		sort.Slice(ciphers, func(i, j int) bool { return ciphers[i] < ciphers[j] })
-		sort.Slice(exts, func(i, j int) bool { return exts[i] < exts[j] })
-		ja4bStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(ciphers, ""))))[:12]
-		ja4cStr := tools.Hex(sha256.Sum256([]byte(tools.AnyJoin(exts, "") + tools.AnyJoin(clientHelloParseData.Algorithms, ""))))[:12]
-		ja4 := tools.AnyJoin([]string{ja4aStr, ja4bStr, ja4cStr}, "_")
-		result["ja4"] = ja4
-	}
-	h2Ja3Spec := fpData.H2Ja3Spec()
-	result["http2"] = h2Ja3Spec
-	result["akamai_fp"] = h2Ja3Spec.Fp()
-	if ok {
-		ctx.JSON(200, result)
+	} else if certificate, err := gtls.CreateProxyCertWithName("test"); err != nil {
+		return tlsConfig, err
 	} else {
-		ctx.JSON(200, map[string]any{
-			"error": "fp load error",
-		})
+		tlsConfig = &tls.Config{Certificates: []tls.Certificate{certificate}}
 	}
+	if tlsConfig.NextProtos == nil {
+		if option.NextProtos == nil {
+			tlsConfig.NextProtos = []string{"h2", "http/1.1"}
+		} else {
+			tlsConfig.NextProtos = option.NextProtos
+		}
+	}
+	return tlsConfig, nil
 }
 
-func Serve(handler http.Handler, options ...Option) (err error) {
+type server struct {
+	connPip   chan net.Conn
+	listener  net.Listener
+	tlsConfig *tls.Config
+	handler   http.Handler
+	addr      net.Addr
+	ctx       context.Context
+	cnl       context.CancelFunc
+	err       error
+}
+
+func (obj *server) close() {
+	obj.cnl()
+}
+func (obj *server) mainHandle(preCtx context.Context, client net.Conn) (err error) {
+	defer recover()
+	if client == nil {
+		return errors.New("client is nil")
+	}
+	defer client.Close()
+	clientReader := bufio.NewReader(client)
+
+	peekBytes, err := clientReader.Peek(1)
+	if err != nil {
+		return err
+	}
+	if peekBytes[0] != 22 {
+		return errors.New("protol error")
+	}
+	if peekBytes, err = clientReader.Peek(5); err != nil {
+		return err
+	}
+	if peekBytes, err = clientReader.Peek(int(binary.BigEndian.Uint16(peekBytes[3:5])) + 5); err != nil {
+		return err
+	}
+	rawClientHello := make([]byte, len(peekBytes))
+	copy(rawClientHello, peekBytes)
+	tlsClient := tls.Server(newWrapCon(client, clientReader), obj.tlsConfig)
+	defer tlsClient.Close()
+	if err := tlsClient.HandshakeContext(preCtx); err != nil {
+		return err
+	}
+	if tlsClient.ConnectionState().NegotiatedProtocol == "h2" {
+		ja3Ctx, ja3Context := ja3.CreateContext(preCtx)
+		ja3Context.SetClientHelloData(rawClientHello)
+		ja3Context.SetConnectionState(tlsClient.ConnectionState())
+		(&http2.Server{CloseCallBack: func() bool {
+			select {
+			case <-preCtx.Done():
+				return true
+			default:
+				return false
+			}
+		}}).ServeConn(tlsClient, &http2.ServeConnOpts{
+			Context: ja3Ctx,
+			Handler: obj.handler,
+		})
+	} else {
+		tlsCtx, tlsCnl := context.WithCancel(preCtx)
+		select {
+		case <-preCtx.Done():
+			return preCtx.Err()
+		case obj.connPip <- newTlsConn(tlsCnl, tlsClient, rawClientHello):
+			<-tlsCtx.Done()
+		}
+	}
+	return nil
+}
+func (obj *server) listen() error {
+	defer obj.close()
+	ln := newListen(obj.ctx, obj.cnl, obj.connPip, obj.addr)
+	defer ln.Close()
+	return (&http.Server{ConnContext: ConnContext, Handler: obj.handler}).Serve(ln)
+}
+func (obj *server) serve() error {
+	defer obj.close()
+	for {
+		select {
+		case <-obj.ctx.Done():
+			obj.err = obj.ctx.Err()
+			return obj.err
+		default:
+			client, err := obj.listener.Accept() //接受数据
+			if err != nil {
+				obj.err = err
+				return err
+			}
+			go obj.mainHandle(obj.ctx, client)
+		}
+	}
+}
+func Server(ctx context.Context, handler http.Handler, options ...Option) (err error) {
 	var option Option
 	if len(options) > 0 {
 		option = options[0]
 	}
 	if option.Addr == "" {
-		if option.Server != nil && option.Server.Addr != "" {
-			option.Addr = option.Server.Addr
-		} else {
-			option.Addr = ":0"
-		}
+		option.Addr = ":0"
 	}
-	var certificate tls.Certificate
-	if option.Certificate.Certificate != nil {
-		certificate = option.Certificate
-	} else if option.CertFile != "" && option.KeyFile != "" {
-		if certData, err := os.ReadFile(option.CertFile); err != nil {
-			return err
-		} else if cert, err := gtls.LoadCert(certData); err != nil {
-			return err
-		} else if keyData, err := os.ReadFile(option.KeyFile); err != nil {
-			return err
-		} else if key, err := gtls.LoadCertKey(keyData); err != nil {
-			return err
-		} else if certificate, err = gtls.CreateTlsCert(cert, key); err != nil {
-			return err
-		}
-	} else if certificate, err = gtls.CreateProxyCertWithName("test"); err != nil {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	server := &server{
+		handler: handler,
+		connPip: make(chan net.Conn),
+	}
+	server.ctx, server.cnl = context.WithCancel(ctx)
+	if server.listener, err = net.Listen("tcp", option.Addr); err != nil {
 		return err
 	}
-	var tlSConfig *tls.Config
-	if option.TLSConfig == nil {
-		tlSConfig = new(tls.Config)
-	} else {
-		tlSConfig = option.TLSConfig
-	}
-	if tlSConfig.Certificates == nil {
-		tlSConfig.Certificates = []tls.Certificate{certificate}
-	}
-	if tlSConfig.GetConfigForClient == nil {
-		tlSConfig.GetConfigForClient = GetConfigForClient
-	}
-	if tlSConfig.NextProtos == nil {
-		tlSConfig.NextProtos = []string{"h2", "http/1.1"}
-	}
-	var server *http.Server
-	if option.Server != nil {
-		server = option.Server
-	} else {
-		server = new(http.Server)
-	}
-	if server.TLSNextProto == nil {
-		server.TLSNextProto = map[string]func(*http.Server, *tls.Conn, http.Handler){
-			"h2": TlsH2tProto,
-		}
-	}
-	if server.ConnContext == nil {
-		server.ConnContext = ConnContext
-	}
-	if server.Addr == "" {
-		server.Addr = option.Addr
-	}
-	if server.Handler == nil {
-		server.Handler = handler
-	}
-	if server.TLSConfig == nil {
-		server.TLSConfig = tlSConfig
-	}
-	ln, err := Listen("tcp", option.Addr)
-	if err != nil {
+	if server.tlsConfig, err = newTlsConfig(option); err != nil {
 		return err
 	}
-	defer ln.Close()
-	return server.ServeTLS(ln, "", "")
+	go server.listen()
+	return server.serve()
 }
-func TlsH2tProto(s *http.Server, c *tls.Conn, h http.Handler) {
-	ctx, fpContextData := ja3.CreateContext(context.TODO())
-	if conn, ok := c.NetConn().(*Conn); ok {
-		fpContextData.SetClientHelloData(conn.clientHelloData())
-	}
-	(&http2.Server{}).ServeConn(c, &http2.ServeConnOpts{
-		Context:    ctx,
-		Handler:    h,
-		BaseConfig: s,
-	})
-}
-func ConnContext(ctx context.Context, c net.Conn) context.Context {
-	return ja3.ConnContext(ctx, c)
-}
-func GetConfigForClient(chi *tls.ClientHelloInfo) (*tls.Config, error) {
-	if fpContextData, ok := ja3.GetFpContextData(chi.Context()); ok {
-		fpContextData.SetClientHelloInfo(*chi)
-		if conn, ok := chi.Conn.(*Conn); ok {
-			fpContextData.SetClientHelloData(conn.clientHelloData())
-		}
-	}
-	return nil, nil
-}
-
-func Listen(network string, address string) (*Listener, error) {
-	lns, err := net.Listen(network, address)
-	return &Listener{lns}, err
-}
-
-type Listener struct{ listen net.Listener }
-type Conn struct {
-	conn           net.Conn
-	rawClientHello []byte
-	fin            bool
-}
-
-func (obj *Conn) clientHelloData() []byte {
-	return obj.rawClientHello
-}
-func (obj *Conn) Read(b []byte) (n int, err error) {
-	i, err := obj.conn.Read(b)
-	if !obj.fin && err == nil && i > 0 {
-		obj.rawClientHello = append(obj.rawClientHello, b[:i]...)
-		if obj.rawClientHello[0] != 22 {
-			obj.fin = true
-		} else if rawTotal := len(obj.rawClientHello); rawTotal >= 5 {
-			if total := int(binary.BigEndian.Uint16(obj.rawClientHello[3:5])) + 5; total > 16384 {
-				obj.fin = true
-			} else if total <= rawTotal {
-				obj.rawClientHello = obj.rawClientHello[:total]
-				obj.fin = true
-			}
-		}
-	}
-	return i, err
-}
-func (obj *Conn) Write(b []byte) (n int, err error)  { return obj.conn.Write(b) }
-func (obj *Conn) Close() error                       { return obj.conn.Close() }
-func (obj *Conn) LocalAddr() net.Addr                { return obj.conn.LocalAddr() }
-func (obj *Conn) RemoteAddr() net.Addr               { return obj.conn.RemoteAddr() }
-func (obj *Conn) SetDeadline(t time.Time) error      { return obj.conn.SetDeadline(t) }
-func (obj *Conn) SetReadDeadline(t time.Time) error  { return obj.conn.SetReadDeadline(t) }
-func (obj *Conn) SetWriteDeadline(t time.Time) error { return obj.conn.SetWriteDeadline(t) }
-
-func (obj *Listener) Accept() (net.Conn, error) {
-	conn, err := obj.listen.Accept()
-	return &Conn{conn: conn, rawClientHello: []byte{}}, err
-}
-func (obj *Listener) Close() error   { return obj.listen.Close() }
-func (obj *Listener) Addr() net.Addr { return obj.listen.Addr() }

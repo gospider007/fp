@@ -18,9 +18,9 @@ import (
 
 func main() {
 	handle := gin.Default()
-    //fp url in : https://127.0.0.1:8999/
+	//fp url in : https://127.0.0.1:8999/
 	handle.GET("/", fp.GinHandlerFunc)
-	err := fp.Serve(handle.Handler(), fp.Option{Addr: ":8999"})
+	err := fp.Server(nil, handle.Handler(), fp.Option{Addr: ":8999"})
 	log.Print(err)
 }
 ```
