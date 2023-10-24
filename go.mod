@@ -4,10 +4,10 @@ go 1.21.3
 
 require (
 	github.com/gin-gonic/gin v1.9.1
-	github.com/gospider007/gtls v0.0.0-20231023095101-01d7aaf6daf5
-	github.com/gospider007/ja3 v0.0.0-20231024075053-fcbdb6ab1f1f
-	github.com/gospider007/net v0.0.0-20231021032248-9d6039f6176a
-	github.com/gospider007/tools v0.0.0-20231015122431-2acd695704d6
+	github.com/gospider007/gtls v0.0.0-20231024092712-01193b9f0404
+	github.com/gospider007/ja3 v0.0.0-20231024093217-2de3491f0fe3
+	github.com/gospider007/net v0.0.0-20231024100002-ee7def48f1b3
+	github.com/gospider007/tools v0.0.0-20231024115950-be51fa815fcd
 )
 
 require (
@@ -24,8 +24,8 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.15.5 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/gospider007/kinds v0.0.0-20231015025159-69ab7d8d9b94 // indirect
-	github.com/gospider007/re v0.0.0-20231015023348-717c984874af // indirect
+	github.com/gospider007/kinds v0.0.0-20231024093643-7a4424f2d30e // indirect
+	github.com/gospider007/re v0.0.0-20231024115818-adfd03636256 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.17.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
@@ -40,6 +40,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/quic-go/quic-go v0.39.1 // indirect
 	github.com/refraction-networking/utls v1.5.4 // indirect
+	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
@@ -55,5 +56,6 @@ require (
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
