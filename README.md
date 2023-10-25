@@ -1,5 +1,11 @@
 # introduce
-Help the server obtain the client's Ja3 fingerprint, http2 fingerprint, and Ja4 fingerprint
+Help the server obtain the client's Ja3 fingerprint, http2 fingerprint, Ja4 fingerprint, Ja4H fingerprint
+# features
+* Completely implemented by Golang without external dependencies
+* Automatic certificate, automatic replacement upon expiration
+* Fast integration of all frameworks related to Golang
+* Both http1.1 and http2 are supported
+
 # get started
 ## install
 ```
@@ -53,7 +59,6 @@ func main() {
             ":authority",
             ":scheme",
             ":path",
-            "cache-control",
             "sec-ch-ua",
             "sec-ch-ua-mobile",
             "sec-ch-ua-platform",
@@ -73,13 +78,15 @@ func main() {
             "Weight": 255
         }
     },
-    "ja3": "772,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53,23-45-13-11-16-65281-27-17513-10-43-51-5-18-35-21,29-23-24,0",
-    "ja3n": "772,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53,,29-23-24,0",
-    "ja4": "t13i1515h2_d9e802bd6bed_c72f4b657d17",
+    "ja3": "772,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53,16-0-5-35-45-27-18-23-17513-51-65281-11-43-10-13-41,12092-29-23-24,0",
+    "ja3n": "772,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53,,12092-29-23-24,0",
+    "ja4": "t13d1516h2_d9e802bd6bed_ea967019fa2a",
+    "ja4h": "ge20nn10zhcn_0f5a7a41a252_e3b0c44298fc_e3b0c44298fc",
     "negotiatedProtocol": "h2",
+    "orderHeaders": null,
     "tls": {
         "Ciphers": [
-            31354,
+            60138,
             4865,
             4866,
             4867,
@@ -98,28 +105,30 @@ func main() {
         ],
         "Curves": [
             2570,
+            12092,
             29,
             23,
             24
         ],
         "Extensions": [
             64250,
-            23,
-            45,
-            13,
-            11,
             16,
-            65281,
-            27,
-            17513,
-            10,
-            43,
-            51,
+            0,
             5,
-            18,
             35,
-            47802,
-            21
+            45,
+            27,
+            18,
+            23,
+            17513,
+            51,
+            65281,
+            11,
+            43,
+            10,
+            13,
+            10794,
+            41
         ],
         "Points": [
             0
@@ -143,13 +152,13 @@ func main() {
             2054,
             1537
         ],
-        "RandomTime": "2057-07-29 16:32:24 +0800 CST",
-        "RandomBytes": "da910004407cbc3583d60526e1656691bfcc23cd5f9c8e9320cc6c35",
-        "SessionId": "3f019637350afb7a08591b2b2bda9ca9b7a8010478af331609e275c19bd41223",
+        "RandomTime": "2045-11-20 13:47:01 -0500 EST",
+        "RandomBytes": "94032f738ddcb26991ae036c1838f1dc8a79ed5b3fe3efefee89cec7",
+        "SessionId": "9b7991ce3fc624e0c91cc15c25f359d1f20307a055df0d5d27a31f98ce4fd74d",
         "CompressionMethods": "00"
     },
     "tlsVersion": 772,
-    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.60"
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61"
 }
 ```
 # Contributing
