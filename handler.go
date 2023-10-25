@@ -10,6 +10,7 @@ import (
 
 // example:  https://tools.scrapfly.io/api/fp/anything?extended=1
 func GinHandlerFunc(ctx *gin.Context) {
+	ctx.Header("Access-Control-Allow-Origin", "*")
 	fpData, ok := ja3.GetFpContextData(ctx.Request.Context())
 	result := make(map[string]any)
 	connectionState := fpData.ConnectionState()
@@ -23,6 +24,7 @@ func GinHandlerFunc(ctx *gin.Context) {
 		result["tls"] = clientHelloParseData
 		result["ja3"], result["ja3n"] = clientHelloParseData.Fp()
 		result["ja4"] = fpData.Ja4()
+		result["ja4h"] = fpData.Ja4H(ctx.Request)
 	}
 	h2Ja3Spec := fpData.H2Ja3Spec()
 	result["http2"] = h2Ja3Spec
