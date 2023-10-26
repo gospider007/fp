@@ -18,12 +18,12 @@ func GinHandlerFunc(ctx *gin.Context) {
 	result["tlsVersion"] = connectionState.Version
 	result["userAgent"] = ctx.Request.UserAgent()
 	result["orderHeaders"] = fpData.OrderHeaders()
-	clientHello, err := fpData.ClientHello()
+	tlsData, err := fpData.TlsData()
 	if err == nil {
-		clientHelloParseData := clientHello.TlsData()
+		clientHelloParseData := tlsData
 		result["tls"] = clientHelloParseData
-		result["ja3"], result["ja3n"] = clientHelloParseData.Fp()
-		result["ja4"] = fpData.Ja4()
+		result["ja3"], result["ja3n"] = tlsData.Fp()
+		result["ja4"] = tlsData.Ja4()
 		result["ja4h"] = fpData.Ja4H(ctx.Request)
 	}
 	h2Ja3Spec := fpData.H2Ja3Spec()
