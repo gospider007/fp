@@ -5,8 +5,8 @@ go 1.21.3
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gospider007/gtls v0.0.0-20231024092712-01193b9f0404
-	github.com/gospider007/ja3 v0.0.0-20231024093217-2de3491f0fe3
-	github.com/gospider007/net v0.0.0-20231024100002-ee7def48f1b3
+	github.com/gospider007/ja3 v0.0.0-20231026095227-07c8d888e973
+	github.com/gospider007/net v0.0.0-20231026095258-1d82735803e9
 	github.com/gospider007/tools v0.0.0-20231024115950-be51fa815fcd
 )
 
@@ -38,7 +38,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
-	github.com/quic-go/quic-go v0.39.1 // indirect
+	github.com/quic-go/quic-go v0.39.2 // indirect
 	github.com/refraction-networking/utls v1.5.4 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect

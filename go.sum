@@ -51,10 +51,14 @@ github.com/gospider007/gtls v0.0.0-20231024092712-01193b9f0404 h1:Qp/o+l3KgWmviE
 github.com/gospider007/gtls v0.0.0-20231024092712-01193b9f0404/go.mod h1:fLcidMDKVv8b9NvLy0P/ZclltTaXJvTHANWiPCgDbSI=
 github.com/gospider007/ja3 v0.0.0-20231024093217-2de3491f0fe3 h1:D1+cjymqnpi5lE0O/Rq+XR7Q7GIVtrlZyUDmYNEdCZE=
 github.com/gospider007/ja3 v0.0.0-20231024093217-2de3491f0fe3/go.mod h1:dBFCulBJWzGEikp1LmEXUo6yOBDEqMcVQ9dfqVqFg3k=
+github.com/gospider007/ja3 v0.0.0-20231026095227-07c8d888e973 h1:OJTO7ZjtSaif2YCgHQWDF0W1uVBWu8Ym0Fb2NVWyrDM=
+github.com/gospider007/ja3 v0.0.0-20231026095227-07c8d888e973/go.mod h1:s01pga3PND6IkjiLKG/k5ZkC5axjVmFKh3aRDz9nZlk=
 github.com/gospider007/kinds v0.0.0-20231024093643-7a4424f2d30e h1:lmX6IQKkrNDbXfHsvrv1Uz0MoG2v5+4VC6Gdh9irUNY=
 github.com/gospider007/kinds v0.0.0-20231024093643-7a4424f2d30e/go.mod h1:nB4OMmd8Ji92yEmgjbHcqLcBHTAhSSmlGNb2JpTYK9A=
 github.com/gospider007/net v0.0.0-20231024100002-ee7def48f1b3 h1:tAJfEF33TJ7P41QrKtMX2srUtHGNaOs9bZfw88dyGvI=
 github.com/gospider007/net v0.0.0-20231024100002-ee7def48f1b3/go.mod h1:v4dboMBi+Qmelndx43EK2Kt4CYPpcUgHHfWjL7MH7NE=
+github.com/gospider007/net v0.0.0-20231026095258-1d82735803e9 h1:JdMvIqD/8bVTLRqxBzRhQcyBgq5RUljLmTMrgNHD4Ps=
+github.com/gospider007/net v0.0.0-20231026095258-1d82735803e9/go.mod h1:6Ttj+gbmZqAFgl7YZOftLsW76idCrexPzpl0aqxPvJs=
 github.com/gospider007/re v0.0.0-20231024115818-adfd03636256 h1:Z6kHRANoWB+/4rDzq51vBts0rIXilDrF8pdRNmbMJi4=
 github.com/gospider007/re v0.0.0-20231024115818-adfd03636256/go.mod h1:X58uk0/F3mVskuQOZng0ZKJiAt3ETn0wxuLN//rVZrE=
 github.com/gospider007/tools v0.0.0-20231024115950-be51fa815fcd h1:UH2D7tgAmzr9gbtuC46L5bggrDw1/MXq/1YYdN2l+kA=
@@ -101,6 +105,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/quic-go/quic-go v0.39.1 h1:d/m3oaN/SD2c+f7/yEjZxe2zEVotXprnrCCJ2y/ZZFE=
 github.com/quic-go/quic-go v0.39.1/go.mod h1:T09QsDQWjLiQ74ZmacDfqZmhY/NLnw5BC40MANNNZ1Q=
+github.com/quic-go/quic-go v0.39.2 h1:hmwAf8zAHlvan0Y5PXxeeBFZEW17IW99sXLry8I2kjk=
+github.com/quic-go/quic-go v0.39.2/go.mod h1:T09QsDQWjLiQ74ZmacDfqZmhY/NLnw5BC40MANNNZ1Q=
 github.com/refraction-networking/utls v1.5.4 h1:9k6EO2b8TaOGsQ7Pl7p9w6PUhx18/ZCeT0WNTZ7Uw4o=
 github.com/refraction-networking/utls v1.5.4/go.mod h1:SPuDbBmgLGp8s+HLNc83FuavwZCFoMmExj+ltUHiHUw=
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
