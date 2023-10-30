@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gospider007/ja3"
+	"github.com/gospider007/requests"
 )
 
 // example:  https://tools.scrapfly.io/api/fp/anything?extended=1
@@ -18,6 +19,7 @@ func GinHandlerFunc(ctx *gin.Context) {
 	result["tlsVersion"] = connectionState.Version
 	result["userAgent"] = ctx.Request.UserAgent()
 	result["orderHeaders"] = fpData.OrderHeaders()
+	result["cookies"] = requests.Cookies(ctx.Request.Cookies()).String()
 	tlsData, err := fpData.TlsData()
 	if err == nil {
 		clientHelloParseData := tlsData
