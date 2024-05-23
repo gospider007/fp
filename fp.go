@@ -22,8 +22,7 @@ type Option struct {
 	Certificate tls.Certificate
 	NextProtos  []string
 	Handler     http.Handler
-	AcmeDomain  string
-	AcmeEmail   string
+	DomainNames []string
 }
 
 func newTlsConfig(option Option) (*tls.Config, error) {
@@ -44,12 +43,8 @@ func newTlsConfig(option Option) (*tls.Config, error) {
 		} else {
 			tlsConfig = &tls.Config{Certificates: []tls.Certificate{certificate}}
 		}
-	} else if option.AcmeDomain != "" && option.AcmeEmail != "" {
-		if acme, err := gtls.CreateAcme(option.AcmeDomain, option.AcmeEmail); err != nil {
-			return tlsConfig, err
-		} else {
-			tlsConfig = acme.TLSConfig(option.NextProtos)
-		}
+	} else if option.DomainNames != nil {
+		return gtls.TLS(option.DomainNames)
 	} else if certificate, err := gtls.CreateProxyCertWithName("test"); err != nil {
 		return tlsConfig, err
 	} else {
