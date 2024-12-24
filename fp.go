@@ -121,7 +121,7 @@ func (obj *server) mainHandle(preCtx context.Context, client net.Conn) (err erro
 		tlsCtx, tlsCnl := context.WithCancel(preCtx)
 		select {
 		case <-preCtx.Done():
-			return preCtx.Err()
+			return context.Cause(preCtx)
 		case obj.connPip <- newTlsConn(tlsCnl, tlsClient, rawClientHello):
 			<-tlsCtx.Done()
 		}
@@ -139,7 +139,7 @@ func (obj *server) serve() error {
 	for {
 		select {
 		case <-obj.ctx.Done():
-			obj.err = obj.ctx.Err()
+			obj.err = context.Cause(obj.ctx)
 			return obj.err
 		default:
 			client, err := obj.listener.Accept() //接受数据

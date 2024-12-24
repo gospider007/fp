@@ -19,7 +19,7 @@ type Listener struct {
 func (obj *Listener) Accept() (net.Conn, error) {
 	select {
 	case <-obj.ctx.Done():
-		return nil, obj.ctx.Err()
+		return nil, context.Cause(obj.ctx)
 	case conn := <-obj.connPip:
 		return conn, nil
 	}
