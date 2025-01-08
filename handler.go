@@ -28,7 +28,7 @@ func GinHandlerFunc(ctx *gin.Context) {
 		result["ja4"] = tlsData.Ja4()
 		result["ja4h"] = fpData.Ja4H(ctx.Request)
 	}
-	h2Ja3Spec := fpData.H2Ja3Spec()
+	h2Ja3Spec := fpData.H2Spec()
 	result["http2"] = h2Ja3Spec
 	result["akamai_fp"] = h2Ja3Spec.Fp()
 	if ok {
