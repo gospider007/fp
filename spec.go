@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
-	"log"
 	"strings"
 
 	"github.com/gospider007/http2"
@@ -41,7 +40,6 @@ func (obj *tlsConn) ConnectionState() tls.ConnectionState {
 }
 func (obj *tlsConn) TLSSpec() *ja3.Spec {
 	spec, _ := ja3.ParseSpec(obj.rawClientHello)
-	log.Print("浏览器：", spec.CipherSuites)
 	return spec
 }
 func (obj *tlsConn) Content() []byte {

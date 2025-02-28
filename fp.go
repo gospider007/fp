@@ -33,14 +33,14 @@ func newTlsConfig(option Option) (*tls.Config, error) {
 			return tlsConfig, err
 		} else if key, err := gtls.LoadCertKey(keyData); err != nil {
 			return tlsConfig, err
-		} else if certificate, err := gtls.CreateTlsCert(cert, key); err != nil {
+		} else if certificate, err := gtls.MergeCert(cert, key); err != nil {
 			return tlsConfig, err
 		} else {
 			tlsConfig = &tls.Config{Certificates: []tls.Certificate{certificate}}
 		}
 	} else if option.DomainNames != nil {
 		return gtls.TLS(option.DomainNames)
-	} else if certificate, err := gtls.CreateProxyCertWithName("test"); err != nil {
+	} else if certificate, err := gtls.CreateCertWithAddr(net.IPv4(127, 0, 0, 1)); err != nil {
 		return tlsConfig, err
 	} else {
 		tlsConfig = &tls.Config{Certificates: []tls.Certificate{certificate}}
@@ -52,6 +52,7 @@ func newTlsConfig(option Option) (*tls.Config, error) {
 			tlsConfig.NextProtos = option.NextProtos
 		}
 	}
+	tlsConfig.InsecureSkipVerify = true
 	return tlsConfig, nil
 }
 
