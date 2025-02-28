@@ -3,10 +3,12 @@ package fp
 import (
 	"context"
 	"crypto/tls"
+	"log"
 	"net"
 	"net/http"
 	"os"
 
+	"github.com/gospider007/gson"
 	"github.com/gospider007/gtls"
 )
 
@@ -80,4 +82,32 @@ func Server(ctx context.Context, handler http.Handler, options ...Option) (err e
 	}
 	go server.listen()
 	return server.serve()
+}
+
+func Start(addr string) error {
+	if addr == "" {
+		addr = ":8999"
+	}
+	log.Printf("Starting server on %s", addr)
+	err := Server(context.TODO(), http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		rawConn := GetRawConn(r.Context())
+		tlsSpec := rawConn.TLSSpec()
+		h1Spec := rawConn.H1Spec()
+		h2Spec := rawConn.H2Spec()
+		results := map[string]any{
+			"tls":          tlsSpec.Map(),
+			"goSpiderSpec": rawConn.GoSpiderSpec(),
+		}
+		if h1Spec != nil {
+			results["h1"] = h1Spec.Map()
+		}
+		if h2Spec != nil {
+			results["h2"] = h2Spec.Map()
+		}
+		w.WriteHeader(200)
+		con, _ := gson.Encode(results)
+		w.Write(con)
+	}), Option{Addr: addr})
+	return err
 }
