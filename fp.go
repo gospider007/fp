@@ -95,7 +95,6 @@ func Start(addr string) error {
 		tlsSpec := rawConn.TLSSpec()
 		h1Spec := rawConn.H1Spec()
 		h2Spec := rawConn.H2Spec()
-		log.Print(tlsSpec.Hex())
 		results := map[string]any{
 			"tls":          tlsSpec.Map(),
 			"goSpiderSpec": rawConn.GoSpiderSpec(),
