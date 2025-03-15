@@ -16,7 +16,6 @@ func (obj *tlsConn) Read(b []byte) (n int, err error) {
 }
 func (obj *tlsConn) Write(b []byte) (n int, err error) { return obj.conn.Write(b) }
 func (obj *tlsConn) Close() error {
-	obj.cnl()
 	return obj.conn.Close()
 }
 func (obj *tlsConn) LocalAddr() net.Addr                { return obj.conn.LocalAddr() }

@@ -1,7 +1,6 @@
 package fp
 
 import (
-	"context"
 	"crypto/tls"
 	"errors"
 	"strings"
@@ -15,16 +14,14 @@ type tlsConn struct {
 	conn            *tls.Conn
 	rawClientHello  []byte
 	rawContent      []byte
-	cnl             context.CancelFunc
 	saveOk          bool
 	connectionState tls.ConnectionState
 	h2Spec          *http2.Spec
 	h1Spec          *requests.Spec
 }
 
-func newTlsConn(cnl context.CancelFunc, conn *tls.Conn, rawClientHello []byte) *tlsConn {
+func newTlsConn(conn *tls.Conn, rawClientHello []byte) *tlsConn {
 	return &tlsConn{
-		cnl:             cnl,
 		conn:            conn,
 		connectionState: conn.ConnectionState(),
 		rawClientHello:  rawClientHello,
