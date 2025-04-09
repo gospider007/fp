@@ -12,7 +12,7 @@ import (
 type Option struct {
 	Addr      string
 	Handler   http.Handler
-	tlsConfig *tls.Config
+	TLSConfig *tls.Config
 }
 
 func Server(handler http.Handler, options ...Option) (err error) {
@@ -24,13 +24,13 @@ func Server(handler http.Handler, options ...Option) (err error) {
 		option.Addr = ":8999"
 		log.Print("Starting server on https://localhost:8999")
 	}
-	if option.tlsConfig == nil {
-		option.tlsConfig = gtls.GetCertConfigForClient(&tls.Config{
+	if option.TLSConfig == nil {
+		option.TLSConfig = gtls.GetCertConfigForClient(&tls.Config{
 			InsecureSkipVerify: true,
 			NextProtos:         []string{"h2", "http/1.1"},
 		})
 	}
-	ln, err := NewListen(option.Addr, handler, option.tlsConfig)
+	ln, err := NewListen(option.Addr, handler, option.TLSConfig)
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func Server(handler http.Handler, options ...Option) (err error) {
 	return (&http.Server{ConnContext: ConnContext, Handler: handler}).Serve(ln)
 }
 
-func Start(addr string) error {
+func Start(option ...Option) error {
 	return Server(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		rawConn := GetRawConn(r.Context())
@@ -58,5 +58,5 @@ func Start(addr string) error {
 		w.WriteHeader(200)
 		con, _ := gson.Encode(results)
 		w.Write(con)
-	}), Option{Addr: addr})
+	}), option...)
 }

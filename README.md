@@ -20,7 +20,7 @@ import (
 )
 
 func main() {
-	fp.Start("")
+	fp.Start()
 }
 ```
 ## browser open fp url display, local host must be set to localhost
