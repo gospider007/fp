@@ -110,7 +110,7 @@ github.com/gospider007/http2 v0.0.0-20250307152953-67c9f881b5be h1:rUz7sGjJxMGve
 github.com/gospider007/http2 v0.0.0-20250307152953-67c9f881b5be/go.mod h1:c5QmnC5Li5j9L9GRsTEzeleOxytuiS0a5IMt9hHn4Gw=
 github.com/gospider007/http3 v0.0.0-20250228010827-4832f37a33e9 h1:rNUYNiGNoJaCGyqkdVnAH8a8XyMqhCr8zMXzjh7yvl4=
 github.com/gospider007/http3 v0.0.0-20250228010827-4832f37a33e9/go.mod h1:mfJ+xSq2Ur/RtFl3bHJ8QPP5KJZagPLGzcDVo2hgAWk=
-github.com/gospider007/ja3 v0.0.0-20250427082442-f7dc5fb959e6 h1:HA1+KhAvM/ifeyR7wdxYV6Ilg2QCQtflGAmkgrgim8Y=
+github.com/gospider007/ja3 v0.0.0-20250615121404-6d7f30dfa700 h1:UsY1LwHsnvZXdXjoExpwKK/bAiqvfowpwUoLUCG25WU=
 github.com/gospider007/kinds v0.0.0-20250217075226-10f199f7215d h1:+Fih572EdNmYCK1L82MyWOj9tAwIgZ2JqepmasAclg8=
 github.com/gospider007/kinds v0.0.0-20250217075226-10f199f7215d/go.mod h1:3u6J+nbdWhCNJGiQjq/hKSukn2k6ebjd98rd2+fzKNo=
 github.com/gospider007/re v0.0.0-20250217075352-bcb79f285d6c h1:8/Cf+c2680tkWJ+ueZ9RLLK5R5R8nhE8pNBUPHjkvkM=
@@ -253,7 +253,7 @@ golang.org/x/exp v0.0.0-20191030013958-a1ab85dbe136/go.mod h1:JXzH8nQsPlswgeRAPE
 golang.org/x/exp v0.0.0-20191129062945-2f5052295587/go.mod h1:2RIsYlXP63K8oxa1u096TMicItID8zy7Y6sNkU49FU4=
 golang.org/x/exp v0.0.0-20191227195350-da58074b4299/go.mod h1:2RIsYlXP63K8oxa1u096TMicItID8zy7Y6sNkU49FU4=
 golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EHIKF9dgMWnmCNThgcyBT1FY9mM=
-golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476 h1:bsqhLWFR6G6xiQcb+JoGqdKdRU6WzPWmK8E0jxTjzo4=
+golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b h1:M2rDM6z3Fhozi9O7NWsxAkg/yqS/lQJ6PmkyIV3YP+o=
 golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
 golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.28.0 h1:gdem5JW1OLS4FbkWgLO+7ZeFzYtL3xClb97GaUzYMFE=
