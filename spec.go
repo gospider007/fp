@@ -63,9 +63,10 @@ func (obj *tlsConn) GoSpiderSpec() string {
 	return strings.Join(results, "@")
 }
 func (obj *tlsConn) init() error {
-	if obj.connectionState.NegotiatedProtocol == "h2" {
+	switch obj.connectionState.NegotiatedProtocol {
+	case "h2":
 		return obj.initH2()
-	} else if obj.connectionState.NegotiatedProtocol == "http/1.1" {
+	case "http/1.1":
 		return obj.initH1()
 	}
 	obj.saveOk = true

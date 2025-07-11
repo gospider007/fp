@@ -41,6 +41,7 @@ func Server(handler http.Handler, options ...Option) (err error) {
 func Start(option ...Option) error {
 	return Server(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Connection", "close")
 		rawConn := GetRawConn(r.Context())
 		tlsSpec := rawConn.TLSSpec()
 		h1Spec := rawConn.H1Spec()
