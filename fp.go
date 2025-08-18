@@ -25,10 +25,11 @@ func Server(handler http.Handler, options ...Option) (err error) {
 		log.Print("Starting server on https://localhost:8999")
 	}
 	if option.TLSConfig == nil {
-		option.TLSConfig = gtls.GetCertConfigForClient(&tls.Config{
+		option.TLSConfig = &tls.Config{
+			GetCertificate:     gtls.GetCertificate,
 			InsecureSkipVerify: true,
 			NextProtos:         []string{"h2", "http/1.1"},
-		})
+		}
 	}
 	ln, err := NewListen(option.Addr, handler, option.TLSConfig)
 	if err != nil {
