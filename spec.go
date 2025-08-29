@@ -5,9 +5,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/gospider007/http2"
 	"github.com/gospider007/ja3"
-	"github.com/gospider007/requests"
 )
 
 type tlsConn struct {
@@ -16,8 +14,8 @@ type tlsConn struct {
 	rawContent      []byte
 	saveOk          bool
 	connectionState tls.ConnectionState
-	h2Spec          *http2.Spec
-	h1Spec          *requests.Spec
+	h2Spec          *H2Spec
+	h1Spec          *Spec
 }
 
 func newTlsConn(conn *tls.Conn, rawClientHello []byte) *tlsConn {
@@ -42,10 +40,10 @@ func (obj *tlsConn) TLSSpec() *ja3.Spec {
 func (obj *tlsConn) Content() []byte {
 	return obj.rawContent
 }
-func (obj *tlsConn) H1Spec() *requests.Spec {
+func (obj *tlsConn) H1Spec() *Spec {
 	return obj.h1Spec
 }
-func (obj *tlsConn) H2Spec() *http2.Spec {
+func (obj *tlsConn) H2Spec() *H2Spec {
 	return obj.h2Spec
 }
 func (obj *tlsConn) GoSpiderSpec() string {
@@ -76,7 +74,7 @@ func (obj *tlsConn) initH1() error {
 	if obj.saveOk {
 		return nil
 	}
-	spec, err := requests.ParseSpec(obj.rawContent)
+	spec, err := ParseSpec(obj.rawContent)
 	if err != nil {
 		return err
 	}
@@ -89,7 +87,7 @@ func (obj *tlsConn) initH2() error {
 	if obj.saveOk {
 		return nil
 	}
-	spec, err := http2.ParseSpec(obj.rawContent)
+	spec, err := ParseH2Spec(obj.rawContent)
 	if err != nil {
 		return err
 	}
