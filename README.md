@@ -1,17 +1,38 @@
-# introduce
-Help the server obtain the client's Ja3 fingerprint, http2 fingerprint, Ja4 fingerprint, Ja4H fingerprint
+<p align="center">
+  <a href="https://github.com/gospider007/fp"><img src="https://go.dev/images/favicon-gopher.png"></a>
+</p>
+<p align="center">A powerful tool to detect and analyze client fingerprints, including JA3, HTTP/2, JA4, and JA4H fingerprints.</p>
+<p align="center">
+<a href="https://github.com/gospider007/fp">
+    <img src="https://img.shields.io/github/last-commit/gospider007/fp">
+</a>
+<a href="https://github.com/gospider007/fp">
+    <img src="https://img.shields.io/badge/build-passing-brightgreen">
+</a>
+<a href="https://github.com/gospider007/fp">
+    <img src="https://img.shields.io/badge/language-golang-brightgreen">
+</a>
+</p>
+
+---
+
+<h2 align="center">This project identifies and analyzes client fingerprints across multiple protocols, helping developers understand client behavior and enhance security or fingerprint spoofing measures.</h2>
+
+## If you want to spoof request fingerprints, please check out this project: [fingerproxy](https://github.com/gospider007/fingerproxy)
+## The root certificate can be downloaded here: [root certificate](https://github.com/gospider007/gtls/blob/master/ssl/gospider.crt)
+
 # features
 * Completely implemented by Golang without external dependencies
 * Automatic certificate, automatic replacement upon expiration
 * Fast integration of all frameworks related to Golang
 * Both http1.1 and http2 are supported
 
-# get started
+# quick start
 ## install
 ```
 go get github.com/gospider007/fp
 ```
-## quick start
+## Run Fp
 ```go
 package main
 

@@ -3,8 +3,8 @@ module github.com/gospider007/fp
 go 1.25
 
 require (
-	github.com/gospider007/gson v0.0.0-20250819094627-31f516e714bd
-	github.com/gospider007/gtls v0.0.0-20250818100212-f466fa4cc860
+	github.com/gospider007/gson v0.0.0-20250902023357-f5a572ae7883
+	github.com/gospider007/gtls v0.0.0-20250902021519-c73a3df76ed6
 	github.com/gospider007/ja3 v0.0.0-20250820090351-07b1daefd162
 	github.com/gospider007/tools v0.0.0-20250901071517-fba8244dde6c
 	golang.org/x/net v0.43.0
@@ -25,7 +25,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
-	github.com/google/pprof v0.0.0-20250830080959-101d87ff5bc3 // indirect
+	github.com/google/pprof v0.0.0-20250903194437-c28834ac2320 // indirect
 	github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c // indirect
 	github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
