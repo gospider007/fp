@@ -1,10 +1,10 @@
 module github.com/gospider007/fp
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/gospider007/gson v0.0.0-20250910015455-b90779f323c3
-	github.com/gospider007/gtls v0.0.0-20250905095945-312311a3533c
+	github.com/gospider007/gtls v0.0.0-20250910020216-c6f8cdd432fc
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
 	github.com/gospider007/tools v0.0.0-20250910013838-e907a1d00f15
 	golang.org/x/net v0.44.0
@@ -53,7 +53,5 @@ require (
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
 	golang.org/x/text v0.29.0 // indirect
-	golang.org/x/time v0.12.0 // indirect
 	golang.org/x/tools v0.36.0 // indirect
-	google.golang.org/protobuf v1.36.8 // indirect
 )
