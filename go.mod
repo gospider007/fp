@@ -3,7 +3,7 @@ module github.com/gospider007/fp
 go 1.25
 
 require (
-	github.com/gospider007/gson v0.0.0-20250904025131-5ec3c322cb42
+	github.com/gospider007/gson v0.0.0-20250910015455-b90779f323c3
 	github.com/gospider007/gtls v0.0.0-20250905095945-312311a3533c
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
 	github.com/gospider007/tools v0.0.0-20250910013838-e907a1d00f15
