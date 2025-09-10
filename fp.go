@@ -26,7 +26,7 @@ func Server(handler http.Handler, options ...Option) (err error) {
 	}
 	if option.TLSConfig == nil {
 		option.TLSConfig = &tls.Config{
-			GetCertificate:     gtls.GetCertificate,
+			GetCertificate:     func(chi *tls.ClientHelloInfo) (*tls.Certificate, error) { return gtls.GetCertificate(chi, nil, nil) },
 			InsecureSkipVerify: true,
 			NextProtos:         []string{"h2", "http/1.1"},
 		}

@@ -19,7 +19,6 @@
 <h2 align="center">This project identifies and analyzes client fingerprints across multiple protocols, helping developers understand client behavior and enhance security or fingerprint spoofing measures.</h2>
 
 ## If you want to spoof request fingerprints, please check out this project: [fingerproxy](https://github.com/gospider007/fingerproxy)
-## The root certificate can be downloaded here: [root certificate](https://github.com/gospider007/gtls/blob/master/ssl/gospider.crt)
 
 # features
 * Completely implemented by Golang without external dependencies
