@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/gospider007/gson v0.0.0-20250923093120-5ae8a0e86b11
-	github.com/gospider007/gtls v0.0.0-20250923093128-da16404c2526
+	github.com/gospider007/gtls v0.0.0-20250929093316-a1397152be0a
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
 	github.com/gospider007/tools v0.0.0-20250923093005-512399316eb4
 	golang.org/x/net v0.44.0
