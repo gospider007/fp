@@ -3,8 +3,8 @@ module github.com/gospider007/fp
 go 1.25.0
 
 require (
-	github.com/gospider007/gson v0.0.0-20251010080832-ae2473600a8b
-	github.com/gospider007/gtls v0.0.0-20251010080835-5de0a5aebc43
+	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
+	github.com/gospider007/gtls v0.0.0-20251010080853-12699b045240
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
 	github.com/gospider007/tools v0.0.0-20251010080832-0e5c6b21df2d
 	golang.org/x/net v0.46.0
