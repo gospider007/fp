@@ -3,10 +3,10 @@ module github.com/gospider007/fp
 go 1.25.0
 
 require (
-	github.com/gospider007/gson v0.0.0-20250923093120-5ae8a0e86b11
-	github.com/gospider007/gtls v0.0.0-20250929093316-a1397152be0a
+	github.com/gospider007/gson v0.0.0-20251010080832-ae2473600a8b
+	github.com/gospider007/gtls v0.0.0-20251010080835-5de0a5aebc43
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
-	github.com/gospider007/tools v0.0.0-20250923093005-512399316eb4
+	github.com/gospider007/tools v0.0.0-20251010080832-0e5c6b21df2d
 	golang.org/x/net v0.46.0
 )
 
@@ -35,7 +35,6 @@ require (
 	github.com/onsi/ginkgo/v2 v2.26.0 // indirect
 	github.com/refraction-networking/uquic v0.0.6 // indirect
 	github.com/refraction-networking/utls v1.8.0 // indirect
-	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.2.0 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
@@ -54,7 +53,5 @@ require (
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.37.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
-	golang.org/x/time v0.13.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
-	google.golang.org/protobuf v1.36.9 // indirect
 )
