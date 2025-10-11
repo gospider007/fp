@@ -33,8 +33,8 @@ func (obj *tlsConn) SetOk() {
 func (obj *tlsConn) ConnectionState() tls.ConnectionState {
 	return obj.connectionState
 }
-func (obj *tlsConn) TLSSpec() *ja3.Spec {
-	spec, _ := ja3.ParseSpec(obj.rawClientHello)
+func (obj *tlsConn) TLSSpec() *ja3.TlsSpec {
+	spec, _ := ja3.ParseTlsSpec(obj.rawClientHello)
 	return spec
 }
 func (obj *tlsConn) Content() []byte {

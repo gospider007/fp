@@ -59,7 +59,7 @@ func ParseSpec(raw []byte) (*Spec, error) {
 }
 
 type GospiderSpec struct {
-	TLSSpec *ja3.Spec
+	TLSSpec *ja3.TlsSpec
 	H1Spec  *Spec
 	H2Spec  *H2Spec
 }
@@ -75,7 +75,7 @@ func ParseGospiderSpec(value string) (*GospiderSpec, error) {
 		if err != nil {
 			return nil, err
 		}
-		if spec.TLSSpec, err = ja3.ParseSpec(b); err != nil {
+		if spec.TLSSpec, err = ja3.ParseTlsSpec(b); err != nil {
 			return nil, err
 		}
 	}
