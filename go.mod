@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
-	github.com/gospider007/gtls v0.0.0-20251010080853-12699b045240
+	github.com/gospider007/gtls v0.0.0-20251011074705-bb9809acdaf1
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
 	github.com/gospider007/tools v0.0.0-20251010080832-0e5c6b21df2d
 	golang.org/x/net v0.46.0
@@ -35,7 +35,6 @@ require (
 	github.com/onsi/ginkgo/v2 v2.26.0 // indirect
 	github.com/refraction-networking/uquic v0.0.6 // indirect
 	github.com/refraction-networking/utls v1.8.0 // indirect
-	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.2.0 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
