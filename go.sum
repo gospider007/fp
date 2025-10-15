@@ -39,12 +39,8 @@ github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5 h1:qetfPoEv5mUOcj
 github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5/go.mod h1:OuLwuK6/ice+pS/8a2i3+nTBiC07s4T2UX1BVIGjubg=
 github.com/gospider007/gtls v0.0.0-20251015142823-27e7f4f04e5e h1:muZJmV+vvuRaqVfCX031ZtLenk68bt2IfRolpQT8UW8=
 github.com/gospider007/gtls v0.0.0-20251015142823-27e7f4f04e5e/go.mod h1:MDd6DMhyCXU4zWvZ6Z1IVzoQ+jVeEuKxetoySioqAKY=
-github.com/gospider007/http1 v0.0.0-20251011074703-a8d2e5a53aa0 h1:6PrcK9eS/gCknjmE5rrNTDA6ZLUlmDimz2q6WKTG3+A=
-github.com/gospider007/http1 v0.0.0-20251011074703-a8d2e5a53aa0/go.mod h1:uf5TjM/RZsAtPbSUc680KI+J8ByCT2I6yIi54iPwq9Q=
-github.com/gospider007/http2 v0.0.0-20251011074750-9f56e348ffb9 h1:ArJZXvAmeN5iw0VvG4Poo9EByqze0/DxF7Zimqvzff8=
-github.com/gospider007/http2 v0.0.0-20251011074750-9f56e348ffb9/go.mod h1:ea3kz6JXag3dfnMDHrYTnpOyBHByMv+f+Cm+bLeEZu8=
-github.com/gospider007/ja3 v0.0.0-20251015142731-b71ee7d288fb h1:9ymmmFOX1WcE5KVo7gEDtRQgRRqlmRowcaH0gGszps8=
-github.com/gospider007/ja3 v0.0.0-20251015142731-b71ee7d288fb/go.mod h1:t+kC/VIh6Q7P0JfSTL8dKRuCXFDiWvBNttVTTO/aa1c=
+github.com/gospider007/ja3 v0.0.0-20251015151416-4e09dd8d00e8 h1:ChH5pBGCnJ58JjQyGwdg0EkRlUM5dFE7eRzmRx9XXrs=
+github.com/gospider007/ja3 v0.0.0-20251015151416-4e09dd8d00e8/go.mod h1:hxn/d8gLS8iTjyLF3E825PDO4QBOmoNf8WsaQW4KL10=
 github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c h1:WnFZf0v+Du5nH/R3pq5QwkTcfVxLqVMRp2dPaI6w6YY=
 github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c/go.mod h1:8eAmhxyW7p81nsYlD5Wj8I0HuZpVGci+Q9wr6vfY8pg=
 github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf h1:+3g9qmg+XLbYcY4vvbsDM7xHkXF+5U8V/haAYDImGTA=
