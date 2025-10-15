@@ -14,8 +14,9 @@ type tlsConn struct {
 	rawContent      []byte
 	saveOk          bool
 	connectionState tls.ConnectionState
-	h2Spec          *H2Spec
-	h1Spec          *Spec
+	h2Spec          *ja3.H2Spec
+	h1Spec          *ja3.H1Spec
+	// spec            *ja3.GospiderSpec
 }
 
 func newTlsConn(conn *tls.Conn, rawClientHello []byte) *tlsConn {
@@ -40,10 +41,10 @@ func (obj *tlsConn) TLSSpec() *ja3.TlsSpec {
 func (obj *tlsConn) Content() []byte {
 	return obj.rawContent
 }
-func (obj *tlsConn) H1Spec() *Spec {
+func (obj *tlsConn) H1Spec() *ja3.H1Spec {
 	return obj.h1Spec
 }
-func (obj *tlsConn) H2Spec() *H2Spec {
+func (obj *tlsConn) H2Spec() *ja3.H2Spec {
 	return obj.h2Spec
 }
 func (obj *tlsConn) GoSpiderSpec() string {
@@ -74,7 +75,7 @@ func (obj *tlsConn) initH1() error {
 	if obj.saveOk {
 		return nil
 	}
-	spec, err := ParseSpec(obj.rawContent)
+	spec, err := ja3.ParseH1Spec(obj.rawContent)
 	if err != nil {
 		return err
 	}
@@ -87,7 +88,7 @@ func (obj *tlsConn) initH2() error {
 	if obj.saveOk {
 		return nil
 	}
-	spec, err := ParseH2Spec(obj.rawContent)
+	spec, err := ja3.ParseH2Spec(obj.rawContent)
 	if err != nil {
 		return err
 	}
