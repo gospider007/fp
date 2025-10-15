@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
 	github.com/gospider007/gtls v0.0.0-20251015142251-201b535c0f06
-	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe
+	github.com/gospider007/ja3 v0.0.0-20251015142731-b71ee7d288fb
 	github.com/gospider007/tools v0.0.0-20251010080832-0e5c6b21df2d
 	golang.org/x/net v0.46.0
 )
@@ -21,6 +21,8 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20251007162407-5df77e3f7d1d // indirect
+	github.com/gospider007/http1 v0.0.0-20251011074703-a8d2e5a53aa0 // indirect
+	github.com/gospider007/http2 v0.0.0-20251011074750-9f56e348ffb9 // indirect
 	github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c // indirect
 	github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
