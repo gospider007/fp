@@ -9,7 +9,7 @@ import (
 )
 
 type tlsConn struct {
-	conn            *tls.Conn
+	*tls.Conn
 	rawClientHello  []byte
 	rawContent      []byte
 	saveOk          bool
@@ -21,7 +21,7 @@ type tlsConn struct {
 
 func newTlsConn(conn *tls.Conn, rawClientHello []byte) *tlsConn {
 	return &tlsConn{
-		conn:            conn,
+		Conn:            conn,
 		connectionState: conn.ConnectionState(),
 		rawClientHello:  rawClientHello,
 		rawContent:      []byte{},
