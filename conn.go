@@ -22,4 +22,6 @@ type WrapCon struct {
 func newWrapCon(conn net.Conn, reader *bufio.Reader) *WrapCon {
 	return &WrapCon{Conn: conn, reader: reader}
 }
-func (obj *WrapCon) Read(b []byte) (n int, err error) { return obj.reader.Read(b) }
+func (obj *WrapCon) Read(b []byte) (n int, err error) { 
+	return obj.reader.Read(b) 
+}
