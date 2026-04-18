@@ -1,4 +1,4 @@
-module github.com/gospider007/fp
+module github.com/realsadmc/fp_test_suite
 
 go 1.26.0
 
