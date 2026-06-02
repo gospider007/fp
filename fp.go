@@ -87,8 +87,9 @@ func optionHandler(c *gin.Context) {
 
 func Start(option ...Option) error {
 	ginServer := gin.Default()
-	ginServer.GET("/", fingerprintHandler)
-	ginServer.GET("/cert", certHander)
+	// ginServer.GET("/cert", certHander)
+	// ginServer.GET("/", fingerprintHandler)
+	ginServer.GET("/*path", fingerprintHandler)
 	ginServer.OPTIONS("/*path", optionHandler)
 	return Server(ginServer, option...)
 }
