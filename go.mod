@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/gin-gonic/gin v1.12.0
-	github.com/gospider007/gtls v0.0.0-20260715073838-96e84f907503
+	github.com/gospider007/gtls v0.0.0-20260715073905-799be625b0f7
 	github.com/gospider007/ja3 v0.0.0-20260715073838-7269c9154ac3
 	golang.org/x/net v0.57.0
 )
