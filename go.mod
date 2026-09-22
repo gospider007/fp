@@ -4,8 +4,8 @@ go 1.27.0
 
 require (
 	github.com/gin-gonic/gin v1.12.0
-	github.com/gospider007/gtls v0.0.0-20260920005131-106e9fe3ba18
-	github.com/gospider007/ja3 v0.0.0-20260922022700-302937f329d3
+	github.com/gospider007/gtls v0.0.0-20260922022812-eb9c9e960d09
+	github.com/gospider007/ja3 v0.0.0-20260922022812-54ae551bd740
 	golang.org/x/net v0.59.0
 )
 
@@ -31,7 +31,7 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20260906184651-6331bc6350fe // indirect
-	github.com/gospider007/conf v0.0.0-20260911054809-ba863ba0882e // indirect
+	github.com/gospider007/conf v0.0.0-20260922022748-a9c513b9dffe // indirect
 	github.com/gospider007/kinds v0.0.0-20260824054539-a612e386b5ac // indirect
 	github.com/gospider007/re v0.0.0-20260824054539-32823144d328 // indirect
 	github.com/gospider007/tools v0.0.0-20260922022651-0a9e58d5bc65 // indirect
