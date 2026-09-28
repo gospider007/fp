@@ -4,8 +4,8 @@ go 1.27.0
 
 require (
 	github.com/gin-gonic/gin v1.12.0
-	github.com/gospider007/gtls v0.0.0-20260922022900-37560707587c
-	github.com/gospider007/ja3 v0.0.0-20260922022812-54ae551bd740
+	github.com/gospider007/gtls v0.0.0-20260928021833-23712a1707c6
+	github.com/gospider007/ja3 v0.0.0-20260928021832-ede48123d17c
 	golang.org/x/net v0.59.0
 )
 
@@ -31,10 +31,10 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20260926063103-aaccee046517 // indirect
-	github.com/gospider007/conf v0.0.0-20260922022748-a9c513b9dffe // indirect
+	github.com/gospider007/conf v0.0.0-20260928021828-0979921bc630 // indirect
 	github.com/gospider007/kinds v0.0.0-20260824054539-a612e386b5ac // indirect
 	github.com/gospider007/re v0.0.0-20260824054539-32823144d328 // indirect
-	github.com/gospider007/tools v0.0.0-20260922022651-0a9e58d5bc65 // indirect
+	github.com/gospider007/tools v0.0.0-20260928021832-67b261236d01 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.20.1 // indirect
