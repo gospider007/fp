@@ -128,8 +128,8 @@ github.com/quic-go/go-ossfuzz-seeds v0.1.0 h1:APacT+iIaNF6fd8AGEiN3bT/Jtkd2jz4v4
 github.com/quic-go/go-ossfuzz-seeds v0.1.0/go.mod h1:3IOHRbJIc+L6YKMwfDtJAM9Vj9k0YY4muhuyUYk5tbk=
 github.com/quic-go/qpack v0.6.0 h1:g7W+BMYynC1LbYLSqRt8PBg5Tgwxn214ZZR34VIOjz8=
 github.com/quic-go/qpack v0.6.0/go.mod h1:lUpLKChi8njB4ty2bFLX2x4gzDqXwUpaO1DP9qMDZII=
-github.com/quic-go/quic-go v0.65.0 h1:BJQSjdTvLPLmWtaCupUphRbgxgpZhdO/GMpr9Eoe3B4=
-github.com/quic-go/quic-go v0.65.0/go.mod h1:RAro2j2yN9a9EiPACLHT9IB2NXCvGQmmo/alT0yYI0w=
+github.com/quic-go/quic-go v0.66.0 h1:NCsBBGZrI2HZC6aKt4I89T5i4Crt39EYNqkh0w2Wgmg=
+github.com/quic-go/quic-go v0.66.0/go.mod h1:RAro2j2yN9a9EiPACLHT9IB2NXCvGQmmo/alT0yYI0w=
 github.com/refraction-networking/uquic v0.0.6 h1:9ol1oOaOpHDeeDlBY7u228jK+T5oic35QrFimHVaCMM=
 github.com/refraction-networking/uquic v0.0.6/go.mod h1:TFgTmV/yqVCMEXVwP7z7PMAhzye02rFHLV6cRAg59jc=
 github.com/refraction-networking/utls v1.8.2 h1:j4Q1gJj0xngdeH+Ox/qND11aEfhpgoEvV+S9iJ2IdQo=
@@ -189,8 +189,8 @@ golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACk
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/crypto v0.59.0 h1:xS2jhqYbzNrpvkWP2YTDf4TJwBy3ykR03i8vFDxEc7c=
 golang.org/x/crypto v0.59.0/go.mod h1:veDyUwATGs3c+vN3VfTbzViMGXeTBk3WyhBOkn+F/4U=
-golang.org/x/exp v0.0.0-20261121134650-e1094eeca1b5 h1:dy60w5SqNxJYBAYs1Fg7h4IIYR23bGbwIjTycad1Fe8=
-golang.org/x/exp v0.0.0-20261121134650-e1094eeca1b5/go.mod h1:xeYMf2GfgE/gQmBtvdPsBN608YETsXuvoiEhaOxGg/w=
+golang.org/x/exp v0.0.0-20261124000051-d6646c509b6d h1:GxW3ezPxBJFxB7GVPlqeQ6mi67zWQC5dFSzidYXJrV8=
+golang.org/x/exp v0.0.0-20261124000051-d6646c509b6d/go.mod h1:xeYMf2GfgE/gQmBtvdPsBN608YETsXuvoiEhaOxGg/w=
 golang.org/x/image v0.48.0 h1:1AvuPcuoOTJpA7s4VZ5umrb90T3So0rkB/bSGmxkxik=
 golang.org/x/image v0.48.0/go.mod h1:mmtg64iqJKGqEgy+r13dfybl85tmxUd2lMnmaiSdWYY=
 golang.org/x/lint v0.0.0-20200302205851-738671d3881b/go.mod h1:3xt1FjdF8hUf6vQPIChWIBhFzV8gjjsPE/fR3IyQdNY=

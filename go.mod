@@ -52,7 +52,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.34.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.4.3 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
-	github.com/quic-go/quic-go v0.65.0 // indirect
+	github.com/quic-go/quic-go v0.66.0 // indirect
 	github.com/refraction-networking/uquic v0.0.6 // indirect
 	github.com/refraction-networking/utls v1.8.2 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
@@ -66,7 +66,7 @@ require (
 	go.uber.org/zap/exp v0.3.0 // indirect
 	golang.org/x/arch v0.33.0 // indirect
 	golang.org/x/crypto v0.59.0 // indirect
-	golang.org/x/exp v0.0.0-20261121134650-e1094eeca1b5 // indirect
+	golang.org/x/exp v0.0.0-20261124000051-d6646c509b6d // indirect
 	golang.org/x/image v0.48.0 // indirect
 	golang.org/x/mod v0.43.0 // indirect
 	golang.org/x/sync v0.25.0 // indirect
